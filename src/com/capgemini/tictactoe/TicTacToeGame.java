@@ -6,12 +6,13 @@ public class TicTacToeGame {
 
 	public static void main(String[] args) {
 
-		char[] board = createBoard();
 		Scanner sc = new Scanner(System.in);
-		char userLetter = selectLetter(sc);
+		
+		char[] board = createBoard();
 		char computerLetter = ' ';
 		int movePosition = 0;
-		boolean checkIfFree = false;
+		
+		char userLetter = selectLetter(sc);
 		if (userLetter == 'X') {
 			computerLetter = 'O';
 			System.out.println("Player has chosen " + userLetter + " and Computer has chosen O");
@@ -21,6 +22,7 @@ public class TicTacToeGame {
 		}
 		showBoard(board);
 		movePosition = getMovePosition(sc, board);
+		board = makeMove(board , movePosition , userLetter);
 
 	}
 
@@ -59,20 +61,25 @@ public class TicTacToeGame {
 	 * UC4
 	 */
 	public static int getMovePosition(Scanner sc, char[] board) {
-		boolean checkIfAvailable = false;
+		boolean isSpaceAvailable = false;
 		int index = 0;
 		do {
 			System.out.println("Select the index from 1 to 9 to make the move");
 			index = sc.nextInt();
-			checkIfAvailable = isFree(board, index);
+			isSpaceAvailable = isSpaceFree(board, index);
 		} while (false);
 		return index;
 	}
 
-	public static boolean isFree(char[] board, int index) {
-		if (board[index] == ' ')
-			return true;
-		else
-			return false;
+	public static boolean isSpaceFree(char[] board, int index) {
+		return (board[index] == ' ') ?  true : false;
+	}
+	
+	/**
+	 * UC5
+	 */
+	public static char[] makeMove(char[]board,int index, char userLetter) {
+		board[index] = userLetter;
+		return board;
 	}
 }
