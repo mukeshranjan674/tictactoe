@@ -17,6 +17,7 @@ public class TicTacToeGame {
 			computerLetter = 'X';
 			System.out.println("Player has chosen " + userLetter + " and Computer has chosen X");
 		}
+		showBoard(board);
 
 	}
 
@@ -38,5 +39,16 @@ public class TicTacToeGame {
 		System.out.println("Please enter X or O");
 		char select = sc.next().charAt(0);
 		return select;
+	}
+
+	/**
+	 * UC3
+	 */
+	public static void showBoard(char[] board) {
+		System.out.println("  " + board[1] + "   | " + board[2] + "   |  " + board[3]);
+		System.out.println("------|-----|------");
+		System.out.println("  " + board[4] + "   | " + board[5] + "   |  " + board[6]);
+		System.out.println("------|-----|------");
+		System.out.println("  " + board[7] + "   | " + board[8] + "   | " + board[9]);
 	}
 }
