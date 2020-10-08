@@ -65,9 +65,9 @@ public class TicTacToeGame {
 	 */
 	public static void showBoard(char[] board) {
 		System.out.println(" " + board[1] + "   |  " + board[2] + "  |  " + board[3]);
-		System.out.println("-----|-----|-----");
+		System.out.println("-----+-----+-----");
 		System.out.println(" " + board[4] + "   |  " + board[5] + "  |  " + board[6]);
-		System.out.println("-----|-----|-----");
+		System.out.println("-----+-----+-----");
 		System.out.println(" " + board[7] + "   |  " + board[8] + "  | " + board[9]);
 	}
 
@@ -155,5 +155,21 @@ public class TicTacToeGame {
 			return "tie";
 		else
 			return "turn";
+	}
+	
+	public static int getIndexForSuccessfulMove(char[]board , char letter) {
+		int index = 1;
+		for( ; index <= 9 ; index++) {
+			char[]dummyBoard = board;
+			if(dummyBoard[index] == ' ') {
+				dummyBoard[index] = letter;
+				String status = checkStatus(dummyBoard , letter);
+				if(status.equals("win"))
+					return index;
+			}
+			else
+				continue;
+		}
+		return index;
 	}
 }
