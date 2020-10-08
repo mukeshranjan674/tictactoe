@@ -157,6 +157,12 @@ public class TicTacToeGame {
 			return "turn";
 	}
 	
+	/**
+	 * UC8
+	 * @param board
+	 * @param letter
+	 * @return
+	 */
 	public static int getIndexForSuccessfulMove(char[]board , char letter) {
 		int index = 1;
 		for( ; index <= 9 ; index++) {
@@ -170,6 +176,6 @@ public class TicTacToeGame {
 			else
 				continue;
 		}
-		return index;
+		return 0;
 	}
 }
