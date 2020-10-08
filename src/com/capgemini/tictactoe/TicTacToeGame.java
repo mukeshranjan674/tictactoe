@@ -3,15 +3,15 @@ package com.capgemini.tictactoe;
 import java.util.Scanner;
 
 public class TicTacToeGame {
-	
+
 	private static final int HEADS = 0;
-	
-	public enum Players{
-		COMPUTER , PLAYER
+
+	public enum Players {
+		COMPUTER, PLAYER
 	}
-	
+
 	public static void main(String[] args) {
-		
+
 		Scanner sc = new Scanner(System.in);
 
 		char[] board = createBoard();
@@ -26,8 +26,8 @@ public class TicTacToeGame {
 			computerLetter = 'X';
 			System.out.println("Player has chosen " + userLetter + " and Computer has chosen X");
 		}
-		showBoard(board);
 		Players firstMove = getFirstPlayer();
+		showBoard(board);
 		movePosition = getMovePosition(sc, board);
 		board = makeMove(board, movePosition, userLetter);
 
@@ -35,6 +35,8 @@ public class TicTacToeGame {
 
 	/**
 	 * UC1
+	 * 
+	 * @return
 	 */
 	public static char[] createBoard() {
 		char[] board = new char[10];
@@ -46,6 +48,9 @@ public class TicTacToeGame {
 
 	/**
 	 * UC2
+	 * 
+	 * @param sc
+	 * @return
 	 */
 	public static char selectLetter(Scanner sc) {
 		System.out.println("Please enter X or O");
@@ -55,6 +60,8 @@ public class TicTacToeGame {
 
 	/**
 	 * UC3
+	 * 
+	 * @param board
 	 */
 	public static void showBoard(char[] board) {
 		System.out.println(" " + board[1] + "   |  " + board[2] + "  |  " + board[3]);
@@ -66,6 +73,10 @@ public class TicTacToeGame {
 
 	/**
 	 * UC4
+	 * 
+	 * @param sc
+	 * @param board
+	 * @return
 	 */
 	public static int getMovePosition(Scanner sc, char[] board) {
 		boolean isSpaceAvailable = false;
@@ -84,6 +95,11 @@ public class TicTacToeGame {
 
 	/**
 	 * UC5
+	 * 
+	 * @param board
+	 * @param index
+	 * @param userLetter
+	 * @return
 	 */
 	public static char[] makeMove(char[] board, int index, char userLetter) {
 		board[index] = userLetter;
@@ -92,11 +108,13 @@ public class TicTacToeGame {
 
 	/**
 	 * UC6
+	 * 
+	 * @return
 	 */
 	public static Players getFirstPlayer() {
 		System.out.println("Tossing a coin...");
 		int coinValue = (int) (Math.floor(Math.random() * 10) % 2);
-		
+
 		if (coinValue == HEADS) {
 			System.out.println("It's Heads. Computer will play first move");
 			return Players.COMPUTER;
@@ -104,5 +122,38 @@ public class TicTacToeGame {
 			System.out.println("It's Tails. Player will play first move");
 			return Players.PLAYER;
 		}
+	}
+
+	/**
+	 * UC7
+	 * 
+	 * @param board
+	 * @param letter
+	 * @return
+	 */
+	public static String checkStatus(char[] board, char letter) {
+
+		int index = 1;
+
+		if ((board[1] == letter && board[4] == letter && board[7] == letter)
+				|| (board[2] == letter && board[5] == letter && board[8] == letter)
+				|| (board[3] == letter && board[6] == letter && board[9] == letter)
+				|| (board[1] == letter && board[2] == letter && board[3] == letter)
+				|| (board[4] == letter && board[5] == letter && board[6] == letter)
+				|| (board[7] == letter && board[8] == letter && board[9] == letter)
+				|| (board[1] == letter && board[5] == letter && board[9] == letter)
+				|| (board[3] == letter && board[5] == letter && board[7] == letter))
+			return "win";
+
+		for (; index <= 9; index++) {
+			if (board[index] != ' ')
+				continue;
+			else
+				break;
+		}
+		if (index == 9)
+			return "tie";
+		else
+			return "turn";
 	}
 }
