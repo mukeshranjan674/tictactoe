@@ -3,15 +3,21 @@ package com.capgemini.tictactoe;
 import java.util.Scanner;
 
 public class TicTacToeGame {
-
+	
+	private static final int HEADS = 0;
+	
+	public enum Players{
+		COMPUTER , PLAYER
+	}
+	
 	public static void main(String[] args) {
-
-		Scanner sc = new Scanner(System.in);
 		
+		Scanner sc = new Scanner(System.in);
+
 		char[] board = createBoard();
 		char computerLetter = ' ';
 		int movePosition = 0;
-		
+
 		char userLetter = selectLetter(sc);
 		if (userLetter == 'X') {
 			computerLetter = 'O';
@@ -21,8 +27,9 @@ public class TicTacToeGame {
 			System.out.println("Player has chosen " + userLetter + " and Computer has chosen X");
 		}
 		showBoard(board);
+		Players firstMove = getFirstPlayer();
 		movePosition = getMovePosition(sc, board);
-		board = makeMove(board , movePosition , userLetter);
+		board = makeMove(board, movePosition, userLetter);
 
 	}
 
@@ -72,14 +79,30 @@ public class TicTacToeGame {
 	}
 
 	public static boolean isSpaceFree(char[] board, int index) {
-		return (board[index] == ' ') ?  true : false;
+		return (board[index] == ' ') ? true : false;
 	}
-	
+
 	/**
 	 * UC5
 	 */
-	public static char[] makeMove(char[]board,int index, char userLetter) {
+	public static char[] makeMove(char[] board, int index, char userLetter) {
 		board[index] = userLetter;
 		return board;
+	}
+
+	/**
+	 * UC6
+	 */
+	public static Players getFirstPlayer() {
+		System.out.println("Tossing a coin...");
+		int coinValue = (int) (Math.floor(Math.random() * 10) % 2);
+		
+		if (coinValue == HEADS) {
+			System.out.println("It's Heads. Computer will play first move");
+			return Players.COMPUTER;
+		} else {
+			System.out.println("It's Tails. Player will play first move");
+			return Players.PLAYER;
+		}
 	}
 }
