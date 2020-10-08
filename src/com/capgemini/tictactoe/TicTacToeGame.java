@@ -178,7 +178,10 @@ public class TicTacToeGame {
 		}
 		return 0;
 	}
-	/**UC9
+
+	/**
+	 * UC9
+	 * 
 	 * @param board
 	 * @param letter
 	 * @return
@@ -186,9 +189,9 @@ public class TicTacToeGame {
 	public static int getIndexToBlockMove(char[] board, char letter) {
 		int index = 1;
 		char dummyLetter = 'O';
-		if(letter == dummyLetter)
+		if (letter == dummyLetter)
 			dummyLetter = 'X';
-			
+
 		for (; index <= 9; index++) {
 			char[] dummyBoard = board;
 			if (dummyBoard[index] == ' ') {
@@ -200,5 +203,43 @@ public class TicTacToeGame {
 				continue;
 		}
 		return 0;
+	}
+
+	/**UC10
+	 * @param board
+	 * @param computerLetter
+	 * @return
+	 */
+	public static char[] computerTurn(char[] board, char computerLetter) {
+		int index = getIndexForSuccessfulMove(board, computerLetter);
+		if (index != 0) {
+			board = makeMove(board, index, computerLetter);
+			return board;
+		}
+		index = getIndexToBlockMove(board, computerLetter);
+		if (index != 0) {
+			board = makeMove(board, index, computerLetter);
+			return board;
+		}
+		index = checkCorners(board);
+		if (index != 0) {
+			board = makeMove(board, index, computerLetter);
+			return board;
+		}
+		return board;
+	}
+
+	public static int checkCorners(char[] board) {
+
+		if (board[1] == ' ')
+			return 1;
+		if (board[3] == ' ')
+			return 3;
+		if (board[7] == ' ')
+			return 7;
+		if (board[9] == ' ')
+			return 9;
+		else
+			return 0;
 	}
 }
