@@ -18,7 +18,21 @@ public class TicTacToeGame {
 	public static void main(String[] args) {
 
 		Scanner sc = new Scanner(System.in);
+		char choice;
+		do {
+			newGame(sc);
+			System.out.println("Want to play More !!  (y/n) ");
+			choice = sc.next().charAt(0);
+		} while (choice == 'y');
 
+	}
+
+	/**
+	 * UC13
+	 * 
+	 * @param sc
+	 */
+	public static void newGame(Scanner sc) {
 		char[] board = createBoard();
 		char computerLetter = ' ';
 		int movePosition = 0;
