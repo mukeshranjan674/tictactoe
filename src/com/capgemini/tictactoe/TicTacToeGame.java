@@ -81,11 +81,13 @@ public class TicTacToeGame {
 	public static int getMovePosition(Scanner sc, char[] board) {
 		boolean isSpaceAvailable = false;
 		int index = 0;
-		do {
+		while (true) {
 			System.out.println("Select the index from 1 to 9 to make the move");
 			index = sc.nextInt();
 			isSpaceAvailable = isSpaceFree(board, index);
-		} while (false);
+			if (isSpaceAvailable)
+				break;
+		}
 		return index;
 	}
 
@@ -167,14 +169,13 @@ public class TicTacToeGame {
 	public static int getIndexForSuccessfulMove(char[] board, char letter) {
 		int index = 1;
 		for (; index <= 9; index++) {
-			char[] dummyBoard = board;
+			char[] dummyBoard = board.clone();
 			if (dummyBoard[index] == ' ') {
 				dummyBoard[index] = letter;
 				String status = checkStatus(dummyBoard, letter);
 				if (status.equals("win"))
 					return index;
-			} else
-				continue;
+			}
 		}
 		return 0;
 	}
@@ -187,25 +188,16 @@ public class TicTacToeGame {
 	 * @return
 	 */
 	public static int getIndexToBlockMove(char[] board, char letter) {
-		int index = 1;
 		char dummyLetter = 'O';
 		if (letter == dummyLetter)
 			dummyLetter = 'X';
 
-		for (; index <= 9; index++) {
-			char[] dummyBoard = board;
-			if (dummyBoard[index] == ' ') {
-				dummyBoard[index] = dummyLetter;
-				String status = checkStatus(dummyBoard, dummyLetter);
-				if (status.equals("win"))
-					return index;
-			} else
-				continue;
-		}
-		return 0;
+		return getIndexForSuccessfulMove(board, dummyLetter);
 	}
 
-	/**UC10
+	/**
+	 * UC10 UC11
+	 * 
 	 * @param board
 	 * @param computerLetter
 	 * @return
@@ -221,15 +213,27 @@ public class TicTacToeGame {
 			board = makeMove(board, index, computerLetter);
 			return board;
 		}
-		index = checkCorners(board);
+		index = getIndexTocheckCorners(board);
 		if (index != 0) {
 			board = makeMove(board, index, computerLetter);
 			return board;
 		}
-		return board;
+		if (isSpaceFree(board, 5)) {
+			board = makeMove(board, index, computerLetter);
+			return board;
+		} else {
+			for (int side = 2; side <= 8; side++) {
+				if (isSpaceFree(board, side)) {
+					board = makeMove(board, index, computerLetter);
+					break;
+				}
+				side++;
+			}
+			return board;
+		}
 	}
 
-	public static int checkCorners(char[] board) {
+	public static int getIndexTocheckCorners(char[] board) {
 
 		if (board[1] == ' ')
 			return 1;
