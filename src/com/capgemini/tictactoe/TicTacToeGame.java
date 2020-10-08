@@ -7,9 +7,14 @@ public class TicTacToeGame {
 	private static final int HEADS = 0;
 
 	public enum Players {
-		COMPUTER, PLAYER
+		COMPUTER, PLAYER, NONE
 	}
 
+	/**
+	 * UC12
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 
 		Scanner sc = new Scanner(System.in);
@@ -17,7 +22,7 @@ public class TicTacToeGame {
 		char[] board = createBoard();
 		char computerLetter = ' ';
 		int movePosition = 0;
-
+		int maxTurns = 9;
 		char userLetter = selectLetter(sc);
 		if (userLetter == 'X') {
 			computerLetter = 'O';
@@ -27,10 +32,36 @@ public class TicTacToeGame {
 			System.out.println("Player has chosen " + userLetter + " and Computer has chosen X");
 		}
 		Players firstMove = getFirstPlayer();
-		showBoard(board);
-		movePosition = getMovePosition(sc, board);
-		board = makeMove(board, movePosition, userLetter);
+		Players setWinner = Players.NONE;
 
+		do {
+			maxTurns--;
+			if (firstMove == Players.COMPUTER) {
+				board = computerTurn(board, computerLetter);
+				if (checkStatus(board, computerLetter).equals("win")) {
+					setWinner = Players.COMPUTER;
+					break;
+				}
+				firstMove = Players.PLAYER;
+			} else {
+				showBoard(board);
+				movePosition = getMovePosition(sc, board);
+				board = makeMove(board, movePosition, userLetter);
+				if (checkStatus(board, userLetter).equals("win")) {
+					setWinner = Players.PLAYER;
+					break;
+				}
+				firstMove = Players.COMPUTER;
+			}
+		} while (maxTurns > 0);
+
+		showBoard(board);
+		if (setWinner == Players.COMPUTER)
+			System.out.println("Computer won !!");
+		else if (setWinner == Players.PLAYER)
+			System.out.println("Player won !!");
+		else
+			System.out.println("Game Tied !!");
 	}
 
 	/**
