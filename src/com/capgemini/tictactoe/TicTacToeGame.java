@@ -156,24 +156,24 @@ public class TicTacToeGame {
 		else
 			return "turn";
 	}
-	
+
 	/**
 	 * UC8
+	 * 
 	 * @param board
 	 * @param letter
 	 * @return
 	 */
-	public static int getIndexForSuccessfulMove(char[]board , char letter) {
+	public static int getIndexForSuccessfulMove(char[] board, char letter) {
 		int index = 1;
-		for( ; index <= 9 ; index++) {
-			char[]dummyBoard = board;
-			if(dummyBoard[index] == ' ') {
+		for (; index <= 9; index++) {
+			char[] dummyBoard = board;
+			if (dummyBoard[index] == ' ') {
 				dummyBoard[index] = letter;
-				String status = checkStatus(dummyBoard , letter);
-				if(status.equals("win"))
+				String status = checkStatus(dummyBoard, letter);
+				if (status.equals("win"))
 					return index;
-			}
-			else
+			} else
 				continue;
 		}
 		return 0;
