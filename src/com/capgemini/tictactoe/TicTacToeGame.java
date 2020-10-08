@@ -178,4 +178,27 @@ public class TicTacToeGame {
 		}
 		return 0;
 	}
+	/**UC9
+	 * @param board
+	 * @param letter
+	 * @return
+	 */
+	public static int getIndexToBlockMove(char[] board, char letter) {
+		int index = 1;
+		char dummyLetter = 'O';
+		if(letter == dummyLetter)
+			dummyLetter = 'X';
+			
+		for (; index <= 9; index++) {
+			char[] dummyBoard = board;
+			if (dummyBoard[index] == ' ') {
+				dummyBoard[index] = dummyLetter;
+				String status = checkStatus(dummyBoard, dummyLetter);
+				if (status.equals("win"))
+					return index;
+			} else
+				continue;
+		}
+		return 0;
+	}
 }
